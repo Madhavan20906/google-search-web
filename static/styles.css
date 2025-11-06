@@ -1,0 +1,92 @@
+/* static/styles.css */
+:root{
+  --bg: #111111;
+  --panel: #111111;
+  --accent: #323437;
+  --accent-hover: #3f4040;
+  --text: #ffffff;
+  --radius: 12px;
+}
+
+* { box-sizing: border-box; font-family: "JetBrains Mono", monospace; }
+
+html,body{
+  height:100%;
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+}
+
+.container{
+  min-height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+
+.search-box{
+  width: 420px;
+  max-width: calc(100% - 48px);
+  position: relative;
+  border-radius: var(--radius);
+  background: var(--panel);
+  border: 1px solid black;
+  padding: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+}
+
+#searchInput{
+  width:100%;
+  padding:10px 12px;
+  font-size:14px;
+  background: transparent;
+  border: none;
+  outline:none;
+  color:var(--text);
+}
+
+/* Suggestion popup */
+.suggestions{
+  list-style: none;
+  margin:6px 0 0 0;
+  padding:4px 0;
+  max-height:250px;
+  overflow:auto;
+  border-radius:6px;
+  background: var(--panel);
+  display:none;
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: calc(100% + 6px);
+  border:1px solid #111;
+}
+
+/* each suggestion */
+.suggestions li{
+  padding:8px 10px;
+  cursor:pointer;
+  border-radius:4px;
+  user-select:none;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* hover and selection */
+.suggestions li:hover, .suggestions li.active{
+  background: var(--accent);
+  color: var(--text);
+}
+
+/* custom scrollbar similar to your original style */
+.suggestions::-webkit-scrollbar { width:10px; height:10px; background:#111; }
+.suggestions::-webkit-scrollbar-thumb { background:#323437; border-radius:0; }
+.suggestions::-webkit-scrollbar-thumb:hover { background:#3f4040; }
+
+/* small responsive */
+@media (max-width:480px){
+  .search-box{ width: 94%; }
+  .suggestions{ top: calc(100% + 4px); }
+}
