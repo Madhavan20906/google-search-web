@@ -1,4 +1,3 @@
-// static/app.js
 (() => {
   const input = document.getElementById("searchInput");
   const ul = document.getElementById("suggestions");
@@ -36,7 +35,6 @@
     items.forEach((el) => el.classList.remove("active"));
     if (selectedIndex >= 0 && items[selectedIndex]) {
       items[selectedIndex].classList.add("active");
-      // ensure visible
       items[selectedIndex].scrollIntoView({ block: "nearest", inline: "nearest" });
     }
   }
@@ -49,15 +47,12 @@
     fetch(`/suggest?q=${encodeURIComponent(q)}`)
       .then((r) => r.json())
       .then((data) => {
-        // optionally incorporate a local auto completions file by prefixing with '--example.com'
-        // For parity with original code, user could add "--https://example.com" style suggestions.
         setSuggestions(Array.isArray(data) ? data : []);
       })
       .catch((_) => setSuggestions([]));
   }
 
   function handleChoose(text) {
-    // mimic original behavior: if starts with "--", open as URL (without --), else google search
     const trimmed = (text || "").trim();
     const url = trimmed.startsWith("--") ? trimmed.slice(2) : `http://www.google.com/search?q=${encodeURIComponent(trimmed)}`;
     window.open(url, "_blank");
@@ -92,15 +87,11 @@
       ul.style.display = "none";
     }
   });
-
-  // click outside to close
   document.addEventListener("click", (ev) => {
     if (!ev.target.closest(".search-box")) {
       ul.style.display = "none";
     }
   });
-
-  // focus behavior to change icon (mirror original: icon focused/unfocused)
   input.addEventListener("focus", () => {
     try {
       document.querySelector("link[rel='icon']").href = "/static/Google_logo_focused.png";
@@ -111,7 +102,5 @@
       document.querySelector("link[rel='icon']").href = "/static/Google_logo.png";
     } catch (e) { /* ignore */ }
   });
-
-  // initial placeholder
   input.placeholder = "Google";
 })();
