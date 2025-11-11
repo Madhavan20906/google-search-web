@@ -1,4 +1,3 @@
-# app.py
 from flask import Flask, request, jsonify, render_template, send_from_directory
 import requests
 import os
@@ -27,15 +26,12 @@ def suggest():
         resp = requests.get(SUGGEST_URL, params=params, headers=headers, timeout=4.0)
         resp.raise_for_status()
         data = resp.json()
-        # data is usually [query, [suggestions...], ...]
         suggestions = []
         if isinstance(data, list) and len(data) >= 2 and isinstance(data[1], list):
             suggestions = [str(x) for x in data[1]]
     except Exception:
         suggestions = []
     return jsonify(suggestions)
-
-# static files served automatically by Flask, route kept for explicitness
 @app.route("/static/<path:p>")
 def static_files(p):
     return send_from_directory("static", p)
